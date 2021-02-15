@@ -1,0 +1,57 @@
+<main>
+  <section class="to-do-list-container">
+    <header>
+      <h1>TODO LIST</h1>
+    </header>
+    <h2 class="gray">A place to store your todos.</h2>
+
+    <form #searchForm="ngForm">
+      <input
+        type="text"
+        name="searchTerm"
+        id="searchTerm"
+        placeholder="Filter your to-dos"
+        class="entry-bar"
+        ngModel
+        (input)="setSearchTerm(searchForm)"
+      />
+    </form>
+
+    <ol class="list">
+      <li *ngFor="let task of filterList(searchTerm); index as i">
+        <section class="item-row">
+          <section class="list-item">
+            <button
+              (click)="completed(task)"
+              *ngIf="!task.completed"
+              class="complete-button"
+            >
+              Complete
+            </button>
+            <p [ngClass]="{ completed: task.completed === true }">
+              {{ task.task }}
+            </p>
+          </section>
+          <button class="delete-button" (click)="deleteTask(i)">X</button>
+        </section>
+      </li>
+    </ol>
+
+    <p *ngIf="tasks.length === 0" class="no-tasks-paragraph">Nothing to do!</p>
+    <p *ngIf="tasks.length === 0" class="no-tasks-paragraph">
+      Sit back and relax :)
+    </p>
+
+    <form #addForm="ngForm" class="add-form" (ngSubmit)="addTask(addForm)">
+      <input
+        type="text"
+        name="todoAdd"
+        id="todoAdd"
+        placeholder="Add your to-do"
+        class="entry-bar"
+        ngModel
+      />
+      <button class="add-button">Add</button>
+    </form>
+  </section>
+</main>
